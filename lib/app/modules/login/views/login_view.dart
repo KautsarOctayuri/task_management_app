@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:task_management_app/app/routes/app_pages.dart';
 
 import '../controllers/login_controller.dart';
 
@@ -81,7 +82,7 @@ class LoginView extends GetView<LoginController> {
                   ],
                 ):const SizedBox(),
                     Image.asset("assets/images/login.png" , height: Get.height * 0.5,),
-                    FloatingActionButton.extended(onPressed: () {}, label: const Text("Sign With Google"),
+                    FloatingActionButton.extended(onPressed: () => Get.toNamed(Routes.HOME), label: const Text("Sign With Google"),
                     icon: const Icon(Icons.accessibility_new_rounded , color: Colors.white,),),
                   ],),
             ),),
