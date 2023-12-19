@@ -18,7 +18,7 @@ class LoginView extends GetView<LoginController> {
           color: Colors.white,
         ),
         child: Row(
-          children: [
+          children: [!context.isPhone?
             Expanded(
                 child: Container(
               decoration: const BoxDecoration(
