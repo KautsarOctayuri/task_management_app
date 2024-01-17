@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:task_management_app/app/routes/app_pages.dart';
 import 'package:task_management_app/app/utils/style/AppColor.dart';
 import 'package:task_management_app/app/utils/widget/SideBar.dart';
 import 'package:task_management_app/app/utils/widget/header.dart';
+import 'package:task_management_app/app/utils/widget/myTask.dart';
+import 'package:task_management_app/app/utils/widget/profilwidget.dart';
 
 import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
-final GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
+  final GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +32,6 @@ final GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
               !context.isPhone
                   ? const header()
                   : Container(
-                  
                       padding: const EdgeInsets.all(20),
                       child: Row(
                         children: [
@@ -42,7 +44,9 @@ final GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
                               color: AppColors.primaryText,
                             ),
                           ),
-                          const SizedBox(width: 15,),
+                          const SizedBox(
+                            width: 15,
+                          ),
                           const Column(
                             // mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,31 +64,67 @@ final GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
                             ],
                           ),
                           const Spacer(),
-                          const Icon(
-                            Icons.notifications,
-                            color: AppColors.primaryText,
-                            size: 30,
-                          ),
-                          const SizedBox(width: 15,),
-                          ClipRRect(borderRadius: BorderRadius.circular(30),
-                          child : const CircleAvatar(backgroundColor: Colors.amber,radius: 25,foregroundImage: NetworkImage('https://cdn.idntimes.com/content-images/post/20230515/gambar-profil-wa-keren-41d3732660868cf4a36d801d1301f672.jpg'),),),
+                          GestureDetector(
+                onTap: () {
+                  Get.defaultDialog(
+                    title: "Sign Out",
+                    content: const Text("Are you sure want to exit ?"),
+                    cancel : ElevatedButton(onPressed: ()=>Get.back(), child: const Text("Cancel")),
+                    confirm: ElevatedButton(onPressed: ()=>Get.toNamed(Routes.LOGIN), child: const Text("Sign Out"))
+                    );
+                  
+                },
+                child: const Row(
+                  children: [
+                    Text("Sign Out", style: TextStyle(color: AppColors.primaryText,fontSize: 16), ),
+                    SizedBox(width: 5,),
+                Icon(Icons.logout , 
+                color:AppColors.primaryText,
+                size: 25,
+                ),
+                  ],
+                ),
+              ),
+                          
                         ],
                       ),
                     ),
-                    //content
+              //content
               Expanded(
-                  child: Container(
-                padding: const EdgeInsets.all(50),
-                margin: !context.isPhone
-                    ? const EdgeInsets.all(10)
-                    : const EdgeInsets.all(0),
-                decoration: BoxDecoration(
-                  borderRadius: !context.isPhone
-                      ? BorderRadius.circular(50)
-                      : BorderRadius.circular(20),
-                  color: Colors.white,
+                child: Container(
+                  padding: !context.isPhone
+                        ? const EdgeInsets.all(50)
+                        : const EdgeInsets.all(20),
+                    margin: !context.isPhone
+                        ? const EdgeInsets.all(10)
+                        : const EdgeInsets.all(0),
+                    decoration: BoxDecoration(
+                      borderRadius: !context.isPhone
+                          ? BorderRadius.circular(50)
+                          : BorderRadius.circular(20),
+                      color: Colors.white,
+                    ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const ProfileW(),
+                      const Text(
+                        'My Task',
+                        style: TextStyle(
+                            color: AppColors.primaryText, fontSize: 30),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      SizedBox(
+                        height: Get.height * 0.25,
+                        child: const MyTask(),
+                      ),
+                    ],
+                  ),
                 ),
-              ))
+              ),
             ]),
           ),
         ],
@@ -92,3 +132,4 @@ final GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
     );
   }
 }
+
